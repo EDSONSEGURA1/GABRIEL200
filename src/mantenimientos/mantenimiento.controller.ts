@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { MantenimientoService } from './mantenimiento.service';
-import { CreateMantenimientoDto } from '../create-mantenimiento.dto'; // <-- Un nivel atrás
+import { CreateMantenimientoDto } from './dto/create-mantenimiento.dto';
 
 @Controller('mantenimientos')
 export class MantenimientoController {
