@@ -19,6 +19,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
-  await app.listen(3000);
+  // Puerto dinámico para Render (usa process.env.PORT o el 3000 por defecto localmente)
+  const port = process.env.PORT ?? 3000;
+  await app.listen(port);
 }
 bootstrap();
