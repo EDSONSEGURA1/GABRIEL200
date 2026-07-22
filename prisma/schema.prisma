@@ -3,20 +3,21 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model Equipo {
-  id             Int             @id @default(autoincrement())
+  id             Int              @id @default(autoincrement())
   nombre         String
-  codigo         String          @unique
+  codigo         String           @unique
   categoria      String
   mantenimientos Mantenimiento[]
 }
 
 model Mantenimiento {
-  id          Int    @id @default(autoincrement())
+  id          Int     @id @default(autoincrement())
   descripcion String?
   equipoId    Int
-  equipo      Equipo @relation(fields: [equipoId], references: [id])
+  equipo      Equipo  @relation(fields: [equipoId], references: [id])
 }
