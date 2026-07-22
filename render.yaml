@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: nestjs-backend
+    env: node
+    buildCommand: npm install --include=dev --legacy-peer-deps && npx prisma generate && npm run build
+    startCommand: node dist/main
+    envVars:
+      - key: NODE_ENV
+        value: production
