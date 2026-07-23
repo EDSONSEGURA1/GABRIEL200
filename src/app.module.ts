@@ -9,7 +9,16 @@ import { PrismaService } from './prisma.service';
 
 @Module({
   imports: [],
-  controllers: [ItemsController, MantenimientoController, EquipoController],
-  providers: [ItemsService, MantenimientoService, EquipoService, PrismaService],
+  controllers: [
+    ItemsController,
+    MantenimientoController,
+    EquipoController
+  ],
+  providers: [
+    ItemsService,
+    MantenimientoService,
+    EquipoService,
+    PrismaService
+  ],
 })
 export class AppModule {}

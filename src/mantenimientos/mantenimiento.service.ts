@@ -4,47 +4,71 @@ import { CreateMantenimientoDto } from './dto/create-mantenimiento.dto';
 
 @Injectable()
 export class MantenimientoService {
-  constructor(private prisma: PrismaService) {}
+
+  constructor(
+    private readonly prisma: PrismaService
+  ) {}
 
   async create(createMantenimientoDto: CreateMantenimientoDto) {
+
     return this.prisma.mantenimiento.create({
       data: createMantenimientoDto,
     });
   }
 
   async findAll() {
+
     return this.prisma.mantenimiento.findMany({
-      include: { equipo: true },
+      include: {
+        equipo: true,
+      },
     });
   }
 
   async findOne(id: number) {
-    const mantenimiento = await this.prisma.mantenimiento.findUnique({
-      where: { id },
-      include: { equipo: true },
-    });
+
+    const mantenimiento =
+      await this.prisma.mantenimiento.findUnique({
+        where: {
+          id,
+        },
+        include: {
+          equipo: true,
+        },
+      });
 
     if (!mantenimiento) {
-      throw new NotFoundException(`Mantenimiento con ID ${id} no encontrado`);
+      throw new NotFoundException(
+        `Mantenimiento con ID ${id} no encontrado`
+      );
     }
 
     return mantenimiento;
   }
 
-  async update(id: number, createMantenimientoDto: CreateMantenimientoDto) {
-    await this.findOne(id); // Valida que exista
+  async update(
+    id: number,
+    createMantenimientoDto: CreateMantenimientoDto
+  ) {
+
+    await this.findOne(id);
 
     return this.prisma.mantenimiento.update({
-      where: { id },
+      where: {
+        id,
+      },
       data: createMantenimientoDto,
     });
   }
 
   async remove(id: number) {
-    await this.findOne(id); // Valida que exista
+
+    await this.findOne(id);
 
     return this.prisma.mantenimiento.delete({
-      where: { id },
+      where: {
+        id,
+      },
     });
   }
 }

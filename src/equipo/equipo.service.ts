@@ -4,21 +4,31 @@ import { CreateEquipoDto } from './dto/create-equipo.dto';
 
 @Injectable()
 export class EquipoService {
-  constructor(private readonly prisma: PrismaService) {}
+
+  constructor(
+    private readonly prisma: PrismaService
+  ) {}
 
   async findAll() {
     return this.prisma.equipo.findMany({
-      include: { mantenimientos: true },
+      include: {
+        mantenimientos: true,
+      },
     });
   }
 
   async create(createEquipoDto: CreateEquipoDto) {
+
     const equipoExistente = await this.prisma.equipo.findUnique({
-      where: { codigo: createEquipoDto.codigo },
+      where: {
+        codigo: createEquipoDto.codigo,
+      },
     });
 
     if (equipoExistente) {
-      throw new BadRequestException(`El equipo con el código ${createEquipoDto.codigo} ya está registrado.`);
+      throw new BadRequestException(
+        `El equipo con código ${createEquipoDto.codigo} ya está registrado`
+      );
     }
 
     return this.prisma.equipo.create({
@@ -26,33 +36,49 @@ export class EquipoService {
     });
   }
 
-  async update(id: string, body: Partial<CreateEquipoDto>) {
-    await this.findOne(id);
-
-    return this.prisma.equipo.update({
-      where: { id: Number(id) },
-      data: body,
-    });
-  }
-
   async findOne(id: string) {
+
     const equipo = await this.prisma.equipo.findUnique({
-      where: { id: Number(id) },
-      include: { mantenimientos: true },
+      where: {
+        id: Number(id),
+      },
+      include: {
+        mantenimientos: true,
+      },
     });
 
     if (!equipo) {
-      throw new NotFoundException(`Equipo con ID ${id} no encontrado`);
+      throw new NotFoundException(
+        `Equipo con ID ${id} no encontrado`
+      );
     }
 
     return equipo;
   }
 
+  async update(
+    id: string,
+    body: Partial<CreateEquipoDto>
+  ) {
+
+    await this.findOne(id);
+
+    return this.prisma.equipo.update({
+      where: {
+        id: Number(id),
+      },
+      data: body,
+    });
+  }
+
   async remove(id: string) {
+
     await this.findOne(id);
 
     return this.prisma.equipo.delete({
-      where: { id: Number(id) },
+      where: {
+        id: Number(id),
+      },
     });
   }
 }

@@ -1,13 +1,27 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  ParseIntPipe
+} from '@nestjs/common';
+
 import { MantenimientoService } from './mantenimiento.service';
 import { CreateMantenimientoDto } from './dto/create-mantenimiento.dto';
 
 @Controller('mantenimientos')
 export class MantenimientoController {
-  constructor(private readonly mantenimientoService: MantenimientoService) {}
+
+  constructor(
+    private readonly mantenimientoService: MantenimientoService
+  ) {}
 
   @Post()
-  create(@Body() createMantenimientoDto: CreateMantenimientoDto) {
+  create(
+    @Body() createMantenimientoDto: CreateMantenimientoDto
+  ) {
     return this.mantenimientoService.create(createMantenimientoDto);
   }
 
@@ -17,12 +31,16 @@ export class MantenimientoController {
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(
+    @Param('id', ParseIntPipe) id: number
+  ) {
     return this.mantenimientoService.findOne(id);
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
+  remove(
+    @Param('id', ParseIntPipe) id: number
+  ) {
     return this.mantenimientoService.remove(id);
   }
 }
